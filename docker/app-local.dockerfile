@@ -1,9 +1,9 @@
 FROM php:7.4-fpm-buster
 RUN apt-get update && apt-get install -y libmcrypt-dev openssl zip unzip git procps nano iputils-ping htop \
     default-mysql-client wget libonig-dev \
-    screen \
+    screen libzip-dev \
     --no-install-recommends \
-    && docker-php-ext-install pdo_mysql bcmath mbstring sockets pcntl
+    && docker-php-ext-install pdo_mysql bcmath mbstring sockets pcntl zip
 
 RUN pecl install xdebug-2.9.5 && docker-php-ext-enable xdebug
 
