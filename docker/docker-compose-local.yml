@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+  php:
+    build:
+      context: ../
+      dockerfile: docker/app-local.dockerfile
+    working_dir: /var/www
+    volumes:
+      - ../:/var/www
+    environment:
+      - "DB_PORT=3306"
+      - "DB_HOST=database"
+      - "XDEBUG_CONFIG=remote_port=9001 remote_host=host.docker.internal remote_enable=1 remote_mode=jit remote_connect_back=0"
+    env_file: '../.env.local'
+    depends_on:
+      - database
+      - database-testing
+    ports:
+      - "5999:5999"
+      - "5999:5999/udp"
+  nginx:
+    build:
+      context: ../
+      dockerfile: docker/web.dockerfile
+    ports:
+      - 80:80
+    volumes:
+      - ../public/:/var/www/public
+    depends_on:
+      - php
+  # The Database
+  database:
+    build:
+      context: ../
+      dockerfile: docker/database.dockerfile
+    volumes:
+      - bellhopdbdata:/var/lib/mysql
+    environment:
+      - "MYSQL_DATABASE=homestead"
+      - "MYSQL_USER=homestead"
+      - "MYSQL_PASSWORD=secret"
+      - "MYSQL_ROOT_PASSWORD=secret"
+    ports:
+      - "33061:3306"
+  database-testing:
+    build:
+      context: ../
+      dockerfile: docker/database.dockerfile
+    environment:
+      - "MYSQL_DATABASE=homesteadå"
+      - "MYSQL_USER=homestead"
+      - "MYSQL_PASSWORD=secret"
+      - "MYSQL_ROOT_PASSWORD=secret"
+    ports:
+      - "33062:3306"
+
+volumes:
+  bellhopdbdata:
+
