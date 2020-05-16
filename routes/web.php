@@ -19,3 +19,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::resource('week', 'WeekController')->only('index');
+
+Route::post('/twilio', 'TwilioController@store');
