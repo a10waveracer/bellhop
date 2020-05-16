@@ -1,0 +1,45 @@
+models:
+  # Users
+  User:
+    name: string
+    phone_number: string
+    paused: date
+    softDeletes
+    relationships:
+      belongsto: Group
+
+  # Weeks
+  Week:
+    year: int
+    week: int
+    price_start: int
+    price_monday_morning: int
+    price_monday_night: int
+    price_tuesday_morning: int
+    price_tuesday_night: int
+    price_wednesday_morning: int
+    price_wednesday_night: int
+    price_thursday_morning: int
+    price_thursday_night: int
+    price_friday_morning: int
+    price_friday_night: int
+    price_saturday_morning: int
+    price_saturday_night: int
+    relationships:
+      belongsTo: User
+
+  Group:
+    group_name: string
+    relationships:
+      hasMany: User
+    
+
+controllers:
+  Week:
+    index:
+      query: all
+#  Twilio:
+#    index
+
+
+seeders: User, Group
