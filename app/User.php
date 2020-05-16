@@ -9,6 +9,8 @@ class User extends Model
 {
     use SoftDeletes;
 
+    protected $primaryKey = 'id';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -18,6 +20,7 @@ class User extends Model
         'name',
         'phone_number',
         'paused',
+        'timezone',
     ];
 
     /**
