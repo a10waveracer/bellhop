@@ -98,7 +98,7 @@ class Week extends Model
         $twilio = new TwilioHelper();
         $twilio->sms(
             $user->phone_number,
-            "Great, thanks! What is your stalk price today?");
+            "Great, thanks! What is Daisy Mae's stalk buy price today?");
         return true;
     }
 
