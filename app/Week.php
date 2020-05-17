@@ -10,11 +10,6 @@ use Illuminate\Support\Facades\Log;
 
 class Week extends Model
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'year',
         'week',
@@ -32,15 +27,19 @@ class Week extends Model
         'price_saturday_morning',
         'price_saturday_night',
         'user_id',
+        'previous_week',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'id' => 'integer',
+    ];
+
+    public $trends = [
+        null => "IDK",
+        0 => 'Fluctuating',
+        3 => 'Small Spike',
+        1 => 'Large Spike',
+        2 => 'Decreasing',
     ];
 
 
