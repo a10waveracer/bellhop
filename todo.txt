@@ -8,3 +8,5 @@ o Add group support
 o Refactor messages to lang files?
 o Log all texts to DB
 o Add parse of Turnip to cache potential results
+o Don't ask on Sunday morning if they already sent a price
+o Add onboarding for new users?

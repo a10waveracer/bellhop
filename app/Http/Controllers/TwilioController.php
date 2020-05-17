@@ -60,7 +60,7 @@ class TwilioController extends Controller
 
         // todo this should be refactored
         $response = new MessagingResponse();
-        $response->message("Thanks {$user->name}, we have logged your bell price.");
+        $response->message("Thanks {$user->name}, we got it!");
         return $response;
     }
 }
