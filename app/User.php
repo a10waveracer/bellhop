@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -11,11 +12,6 @@ class User extends Model
 
     protected $primaryKey = 'id';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name',
         'phone_number',
@@ -23,18 +19,47 @@ class User extends Model
         'timezone',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'id' => 'integer',
     ];
+
+    public int $sundaySendHour = 11;
+
+    public int $morningSendHour = 8;
+
+    public int $eveningSendHour = 12;
 
 
     public function group()
     {
         return $this->belongsTo(\App\Group::class);
     }
+
+    public function needsMessageSent()
+    {
+        // TODO: tests
+        $now = $this->now();
+
+        if($this->hasPaused($now)){
+            return false;
+        }
+        if($now->isSunday()){
+            return $now->hour == $this->sundaySendHour;
+        }
+        if($now->hour == $this->morningSendHour || $now->hour == $this->eveningSendHour){
+            return true;
+        }
+        return false;
+    }
+
+    public function hasPaused($now): bool
+    {
+        return $now < $this->paused;
+    }
+
+    public function now(): Carbon
+    {
+        return Carbon::now($this->timezone);
+    }
+
 }
