@@ -49,6 +49,7 @@ class Week extends Model
         return $this->belongsTo(\App\User::class);
     }
 
+    // TODO: Send in user
     static function storePrice($phoneNumber, $messageBody): bool
     {
         try {
@@ -56,7 +57,7 @@ class Week extends Model
             $user = User::where('phone_number', '=', $phoneNumber)->firstOrFail();
         } catch (ModelNotFoundException $e) {
             Log::error("Could not find a user with phone {$phoneNumber}");
-            return;
+            return false;
         }
 
         // TODO: This may not handle when someone submits a value on Sunday morning and we need to roll back the week
