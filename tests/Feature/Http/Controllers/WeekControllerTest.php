@@ -21,5 +21,6 @@ class WeekControllerTest extends TestCase
         $weeks = factory(Week::class, 3)->create();
 
         $response = $this->get(route('week.index'));
+        $this->markTestSkipped();
     }
 }
