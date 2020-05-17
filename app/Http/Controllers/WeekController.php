@@ -14,5 +14,7 @@ class WeekController extends Controller
     public function index(Request $request)
     {
         $weeks = Week::all();
+
+        return response()->json($weeks);
     }
 }

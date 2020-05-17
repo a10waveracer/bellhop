@@ -36,10 +36,10 @@ class AcnhTimeHelper
 
     static function _isSettingBellStartingPrice(Carbon $submissionTime)
     {
-        if($submissionTime->dayOfWeek == 0 && $submissionTime->hour >= 4){
+        if($submissionTime->isSunday() && $submissionTime->hour >= 4){
             return true;
         }
-        if($submissionTime->dayOfWeek == 1 && $submissionTime->hour < 8){
+        if($submissionTime->isMonday() && $submissionTime->hour < 8){
             return true;
         }
         return false;

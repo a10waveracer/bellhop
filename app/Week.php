@@ -61,12 +61,14 @@ class Week extends Model
         // TODO: This may not handle when someone submits a value on Sunday morning and we need to roll back the week
         $now = Carbon::now($user->timezone);
 
+        $weeks = Week::all();
+
         $week = Week::where('year', '=', $now->year)
-            ->where('week', '=', $now->weekOfYear)
+            ->where('week', '=', $now->week)
             ->where('user_id', '=', $user->id)
             ->firstOrCreate([
                 'year' => $now->year,
-                'week' => $now->weekOfYear,
+                'week' => $now->week,
                 'user_id' => $user->id,
             ]);
 
