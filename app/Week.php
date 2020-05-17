@@ -49,7 +49,7 @@ class Week extends Model
         return $this->belongsTo(\App\User::class);
     }
 
-    static function storePrice($phoneNumber, $messageBody): void
+    static function storePrice($phoneNumber, $messageBody): bool
     {
         try {
             /** @var User $user */
@@ -79,6 +79,12 @@ class Week extends Model
         $week->update([
             $key => (int)$messageBody
         ]);
+
+        if($key == 'previous_trend'){
+            return false;
+        } else {
+            return true;
+        }
     }
 
     static function _shouldStoreTrend(User $user, $messagebody): bool
