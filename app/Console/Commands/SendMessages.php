@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Helpers\TwilioHelper;
+use App\Http\Controllers\TwilioController;
 use App\User;
 use App\Week;
 use Illuminate\Console\Command;
@@ -61,7 +62,11 @@ class SendMessages extends Command
     public function sendWeeklyMessages(User $user)
     {
         \Log::info("Sending weekly message to {$user->name} at {$user->phone_number}");
-        $message = "Happy Stalkday! What was last week's trend?\n";
+        $pauseWord = TwilioController::PAUSE_WORD;
+        $stopWord = TwilioController::STOP_WORD;
+        $message = "What is your turnip price?\n".
+        "Send '{$pauseWord}' to pause for this week.\n".
+        "Send '{$stopWord}' to stop getting messages forever.";
         $this->twilio->sms(
             $user->phone_number,
             $message

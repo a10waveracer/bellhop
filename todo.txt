@@ -6,3 +6,4 @@ o Add week view
 o Add ability to move between weeks
 o Add group support
 o Refactor messages to lang files?
+o Log all texts to DB
