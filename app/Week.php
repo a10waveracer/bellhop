@@ -90,4 +90,16 @@ class Week extends Model
             "Great, thanks! What is your stalk price today?");
         return $messagebody < 10;
     }
+
+    public function getUrlAttribute()
+    {
+        return "https://turnipprophet.io/?prices={$this->price_start}.".
+            "{$this->price_monday_morning}.{$this->price_monday_night}." .
+            "{$this->price_tuesday_morning}.{$this->price_tuesday_night}." .
+            "{$this->price_wednesday_morning}.{$this->price_wednesday_night}." .
+            "{$this->price_thursday_morning}.{$this->price_thursday_night}." .
+            "{$this->price_friday_morning}.{$this->price_friday_night}." .
+            "{$this->price_saturday_morning}.{$this->price_saturday_night}." .
+            "&pattern={$this->previous_week}";
+    }
 }
