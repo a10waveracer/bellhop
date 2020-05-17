@@ -83,7 +83,8 @@ class Week extends Model
 
     static function _shouldStoreTrend(User $user, $messagebody): bool
     {
-        if($messagebody < 10){
+        // We'll use 0-10 for reserved events; bells should never be this cheap
+        if($messagebody >= 10){
             return false;
         }
         // todo: refactor this into a separate event or somesuch
