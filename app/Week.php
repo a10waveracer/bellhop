@@ -28,7 +28,7 @@ class Week extends Model
         'price_saturday_morning',
         'price_saturday_night',
         'user_id',
-        'previous_week',
+        'previous_trend',
     ];
 
     protected $casts = [
@@ -71,7 +71,7 @@ class Week extends Model
             ]);
 
         if (Week::_shouldStoreTrend($user, $messageBody)) {
-            $key = 'previous_week';
+            $key = 'previous_trend';
         } else {
             $key = AcnhTimeHelper::timeDetermine($now);
         }
@@ -103,6 +103,6 @@ class Week extends Model
             "{$this->price_thursday_morning}.{$this->price_thursday_night}." .
             "{$this->price_friday_morning}.{$this->price_friday_night}." .
             "{$this->price_saturday_morning}.{$this->price_saturday_night}." .
-            "&pattern={$this->previous_week}";
+            "&pattern={$this->previous_trend}";
     }
 }
