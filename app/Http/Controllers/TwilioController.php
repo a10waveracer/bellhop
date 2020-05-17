@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Week;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -20,14 +23,25 @@ class TwilioController extends Controller
         $from = $request->From;
         $body = $request->Body;
 
+        try {
+            /** @var User $user */
+            $user = User::where('phone_number', '=', $from)->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            $response = new MessagingResponse();
+            $response->message("This is odd... we don't have you in our database...");
+            return $response;
+        }
+
+
         if(Str::contains(strtolower($body), self::PAUSE_WORD)){
-            // TODO: store the pause
+            // TODO: Need tests
+            $user->update(['paused' => $user->now()->endOfWeek(Carbon::SATURDAY)]);
             $response->message('No problem! I will leave you alone until next week!');
             return $response;
         }
 
         if(Str::contains(strtolower($body), self::STOP_WORD)){
-            // TODO: store the stop
+            $user->update(['paused' => $user->now()->addYears(10)]);
             $response->message('Understood, we will never message you again. Enjoy ACNH!');
             return $response;
         }
@@ -42,12 +56,11 @@ class TwilioController extends Controller
             return $response;
         }
 
-
-        // TODO: Store this info on the Week
-        $response = new MessagingResponse();
         Week::storePrice($from, $body);
-        // TODO: Add in user name here
-        $response->message('Thanks, we have logged your bell price.');
+
+        // todo this should be refactored
+        $response = new MessagingResponse();
+        $response->message("Thanks {$user->name}, we have logged your bell price.");
         return $response;
     }
 }

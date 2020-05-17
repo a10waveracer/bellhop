@@ -2,7 +2,9 @@ x Send messages to users based on their timezone
 x Add previous week trend support to Week model
 x Add previous week trend support to SMS
 o Add way to subscribe the group via SMS
-o Add week view
+x Add week view
 o Add ability to move between weeks
 o Add group support
 o Refactor messages to lang files?
+o Log all texts to DB
+o Add parse of Turnip to cache potential results
