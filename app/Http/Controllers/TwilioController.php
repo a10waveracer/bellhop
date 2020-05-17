@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Week;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -41,8 +42,10 @@ class TwilioController extends Controller
             return $response;
         }
 
+
         // TODO: Store this info on the Week
         $response = new MessagingResponse();
+        Week::storePrice($from, $body);
         // TODO: Add in user name here
         $response->message('Thanks, we have logged your bell price.');
         return $response;

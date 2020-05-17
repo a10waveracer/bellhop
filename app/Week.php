@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Helpers\AcnhTimeHelper;
+use App\Helpers\TwilioHelper;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -34,12 +35,12 @@ class Week extends Model
         'id' => 'integer',
     ];
 
-    public $trends = [
-        null => "IDK",
+    const TRENDS = [
         0 => 'Fluctuating',
-        3 => 'Small Spike',
         1 => 'Large Spike',
         2 => 'Decreasing',
+        3 => 'Small Spike',
+        4 => "IDK", // It's actually null, but this will make it easier
     ];
 
 
@@ -50,18 +51,16 @@ class Week extends Model
 
     static function storePrice($phoneNumber, $messageBody): void
     {
-        try{
+        try {
+            /** @var User $user */
             $user = User::where('phone_number', '=', $phoneNumber)->firstOrFail();
-        } catch(ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             Log::error("Could not find a user with phone {$phoneNumber}");
             return;
         }
 
         // TODO: This may not handle when someone submits a value on Sunday morning and we need to roll back the week
-        $now = Carbon::now($user->timezone);
-
-        $weeks = Week::all();
-
+        $now = $user->now();
         $week = Week::where('year', '=', $now->year)
             ->where('week', '=', $now->week)
             ->where('user_id', '=', $user->id)
@@ -71,10 +70,24 @@ class Week extends Model
                 'user_id' => $user->id,
             ]);
 
-        $week->update([
-            AcnhTimeHelper::timeDetermine($now) => (int) $messageBody
-        ]);
+        if (Week::_shouldStoreTrend($user, $messageBody)) {
+            $key = 'previous_week';
+        } else {
+            $key = AcnhTimeHelper::timeDetermine($now);
+        }
 
-        $week->save();
+        $week->update([
+            $key => (int)$messageBody
+        ]);
+    }
+
+    static function _shouldStoreTrend(User $user, $messagebody): bool
+    {
+        // todo: refactor this into a separate event or somesuch
+        $twilio = new TwilioHelper();
+        $twilio->sms(
+            $user->phone_number,
+            "Great, thanks! What is your stalk price today?");
+        return $messagebody < 10;
     }
 }

@@ -1,7 +1,8 @@
-o Send messages to users based on their timezone
+x Send messages to users based on their timezone
 x Add previous week trend support to Week model
-o Add previous week trend support to SMS
+x Add previous week trend support to SMS
 o Add way to subscribe the group via SMS
 o Add week view
 o Add ability to move between weeks
 o Add group support
+o Refactor messages to lang files?
