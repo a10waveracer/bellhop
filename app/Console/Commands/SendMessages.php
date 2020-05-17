@@ -47,21 +47,25 @@ class SendMessages extends Command
 
     public function sendSundayMorningMessage(User $user)
     {
-        \Log::info("Sending message to {$user->name} at {$user->phone_number}");
+        \Log::info("Sending sunday message to {$user->name} at {$user->phone_number}");
         $message = "Happy Stalkday! What was last week's trend?\n";
         foreach(Week::TRENDS as $key => $trendName){
             $message .= "{$key} => {$trendName}\n";
         }
         $this->twilio->sms(
             $user->phone_number,
-            'Happy Sunday'
+            $message
         );
-
     }
 
     public function sendWeeklyMessages(User $user)
     {
-
+        \Log::info("Sending weekly message to {$user->name} at {$user->phone_number}");
+        $message = "Happy Stalkday! What was last week's trend?\n";
+        $this->twilio->sms(
+            $user->phone_number,
+            $message
+        );
     }
 
 }
