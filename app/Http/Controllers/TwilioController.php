@@ -56,11 +56,14 @@ class TwilioController extends Controller
             return $response;
         }
 
-        Week::storePrice($from, $body);
+        $shouldSendResponse = Week::storePrice($from, $body);
 
-        // todo this should be refactored
-        $response = new MessagingResponse();
-        $response->message("Thanks {$user->name}, we got it!");
-        return $response;
+        if($shouldSendResponse){
+            // todo this should be refactored
+            $response = new MessagingResponse();
+            $response->message("Thanks {$user->name}, we got it!");
+            return $response;
+        }
+
     }
 }

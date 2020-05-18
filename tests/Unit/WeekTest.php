@@ -81,5 +81,27 @@ class WeekTest extends TestCase
         $this->assertNull($week->price_monday_morning);
     }
 
+    public function testAddingTrendForUser()
+    {
+        $trend = 3;
+        $now = Carbon::now();
+
+        Week::storePrice($this->user->phone_number, $trend);
+
+        /** @var Week $week */
+        $week = Week::where('year', '=', $now->year)
+            ->where('week', '=', $now->week)
+            ->where('user_id', '=', $this->user->id)
+            ->first();
+
+        $this->assertEquals(
+            $week->previous_trend,
+            $trend,
+            'Could not assert price_start was set on the correct week'
+        );
+        $this->assertNull($week->price_monday_morning);
+        $this->assertNull($week->price_start);
+    }
+
 
 }

@@ -49,14 +49,15 @@ class Week extends Model
         return $this->belongsTo(\App\User::class);
     }
 
-    static function storePrice($phoneNumber, $messageBody): void
+    // TODO: Send in user
+    static function storePrice($phoneNumber, $messageBody): bool
     {
         try {
             /** @var User $user */
             $user = User::where('phone_number', '=', $phoneNumber)->firstOrFail();
         } catch (ModelNotFoundException $e) {
             Log::error("Could not find a user with phone {$phoneNumber}");
-            return;
+            return false;
         }
 
         // TODO: This may not handle when someone submits a value on Sunday morning and we need to roll back the week
@@ -79,18 +80,25 @@ class Week extends Model
         $week->update([
             $key => (int)$messageBody
         ]);
+
+        if($key == 'previous_trend'){
+            return false;
+        } else {
+            return true;
+        }
     }
 
     static function _shouldStoreTrend(User $user, $messagebody): bool
     {
-        if($messagebody < 10){
+        // We'll use 0-10 for reserved events; bells should never be this cheap
+        if($messagebody >= 10){
             return false;
         }
         // todo: refactor this into a separate event or somesuch
         $twilio = new TwilioHelper();
         $twilio->sms(
             $user->phone_number,
-            "Great, thanks! What is your stalk price today?");
+            "Great, thanks! What is Daisy Mae's stalk buy price today?");
         return true;
     }
 
