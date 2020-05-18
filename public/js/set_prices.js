@@ -18,9 +18,14 @@ const parsePrices = function () {
     Array.from(document.getElementsByClassName('stalk-data')).forEach((div) => {
         let user = div.getElementsByClassName('user')[0].innerText;
         let prices = div.getElementsByClassName('prices')[0].innerText.split(".").map((value) => parseInt(value));
-        let first_buy = div.getElementsByClassName('first_buy')[0].innerText;
+        let first_buy = div.getElementsByClassName('first_buy')[0].innerText === 'true';
         let previous_trend = div.getElementsByClassName('previous_trend')[0].innerText;
-        setPrices(user, prices, first_buy, previous_trend);
+        if (previous_trend === '') previous_trend = null;
+        try {
+            setPrices(user, prices, first_buy, previous_trend);
+        } catch (err) {
+            console.log('Error on user: ' + user);
+        }
     })
 }
 const setPrices = function (user, prices, first_buy, previous_trend) {
