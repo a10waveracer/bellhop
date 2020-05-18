@@ -11,7 +11,10 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    
+    <script src="https://turnipprophet.io/js/predictions.js" defer></script>
+    <script src="{{ asset('js/set_prices.js') }}" defer></script>
+
+    <!-- CSS only -->
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
