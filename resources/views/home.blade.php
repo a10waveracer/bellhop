@@ -20,9 +20,6 @@
                                     <a href="{{$week->url}}" target="_blank">
                                         <div class="md:mx-auto max-w-sm rounded overflow-hidden shadow-lg"
                                              style="cursor:pointer">
-                                            <img class="w-full"
-                                                 src="https://live.staticflickr.com/4399/36998638542_96843003bc_b.jpg"
-                                                 alt="Stalk Success" style="height:100px; object-fit:cover">
                                             <div class="px-6 py-4">
                                                 <p class="text-sm text-gray-600 flex items-center">
                                                     Last updated: {{$week->lastUpdated}}
