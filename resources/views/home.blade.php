@@ -32,7 +32,7 @@
                                                 <p id="{{$week->user->name}}_pattern" class="text-gray-700 text-base"
                                                    style="padding-bottom:0">-- -- --</p>
                                             </div>
-                                            <div class="px-6 py-4" style="padding-top:0">
+                                            <div class="pb-4 text-center">
                                                 <span id="{{$week->user->name}}_price_max"
                                                       class="text-gray-900 inline-block px-3 py-1 text-sm font-semibold text-gray-700 mr-2">-- -- --</span>
                                                 <span id="{{$week->user->name}}_price_min"
