@@ -128,18 +128,30 @@ class Week extends Model
 
     public function getLastUpdatedAttribute()
     {
-        if ($this->price_saturday_morning || $this->price_saturday_night) {
-            return "Saturday";
-        } else if ($this->price_friday_morning || $this->price_friday_night) {
-            return "Friday";
-        } else if ($this->price_thursday_morning || $this->price_thursday_morning) {
-            return "Thursday";
-        } else if ($this->price_wednesday_morning || $this->price_wednesday_morning) {
-            return "Wednesday";
-        } else if ($this->price_tuesday_morning || $this->price_tuesday_morning) {
-            return "Tuesday";
-        } else if ($this->price_monday_morning || $this->price_monday_morning) {
-            return "Monday";
+        if ($this->price_saturday_night) {
+            return "Saturday PM";
+        } else if ($this->price_saturday_morning) {
+            return "Saturday AM";
+        } else if ($this->price_friday_night) {
+            return "Friday PM";
+        } else if ($this->price_friday_morning) {
+            return "Friday AM";
+        } else if ($this->price_thursday_night) {
+            return "Thursday PM";
+        } else if ($this->price_thursday_morning) {
+            return "Thursday AM";
+        } else if ($this->price_wednesday_night) {
+            return "Wednesday PM";
+        } else if ($this->price_wednesday_morning) {
+            return "Wednesday AM";
+        } else if ($this->price_tuesday_night) {
+            return "Tuesday PM";
+        } else if ($this->price_tuesday_morning) {
+            return "Tuesday AM";
+        } else if ($this->price_monday_night) {
+            return "Monday PM";
+        } else if ($this->price_monday_morning) {
+            return "Monday AM";
         } else if ($this->price_start) {
             return "Sunday";
         }
