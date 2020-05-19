@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="flex items-center">
+    <div class="flex justify-center">
         <div class="md:w-1/2 md:mx-auto">
 
             <div class="flex flex-col break-words bg-white border border-2 rounded shadow-md">
@@ -19,7 +19,10 @@
                                 <div class="" style="margin-bottom:15px">
                                     <a href="{{$week->url}}" target="_blank">
                                         <div class="md:mx-auto max-w-sm rounded overflow-hidden shadow-lg"
-                                             style="cursor:pointer">
+                                             style="cursor:pointer; border-radius:15px;">
+                                            <img id="{{$week->user->name}}_img" class="w-full"
+                                                 src=""
+                                                 alt="" style="object-fit:cover">
                                             <div class="px-6 py-4">
                                                 <p class="text-sm text-gray-600 flex items-center">
                                                     Last updated: {{$week->lastUpdated}}
@@ -34,12 +37,15 @@
                                                       class="text-gray-900 inline-block px-3 py-1 text-sm font-semibold text-gray-700 mr-2">-- -- --</span>
                                                 <span id="{{$week->user->name}}_price_min"
                                                       class="text-gray-600 inline-block px-3 py-1 text-sm font-semibold text-gray-700 mr-2">-- -- --</span>
+                                                <span id="{{$week->user->name}}_price_now"
+                                                      class="text-gray-300 inline-block px-3 py-1 text-sm font-semibold text-gray-700 mr-2">-- -- --</span>
                                             </div>
                                         </div>
                                     </a>
                                     <div class="stalk-data" style="display:none">
                                         <div class="user">{{$week->user->name}}</div>
                                         <div class="prices">{{$week->prices}}</div>
+                                        <div class="timezone">{{$week->user->timezone}}</div>
                                         <div class="first_buy">{{$week->first_buy}}</div>
                                         <div class="previous_trend">{{$week->previous_trend}}</div>
                                     </div>
