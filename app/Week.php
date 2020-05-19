@@ -157,4 +157,9 @@ class Week extends Model
         }
         return "--";
     }
+
+    public function getPreviousTrendAttribute()
+    {
+        return $this->attributes['previous_trend'] == 4 ? null : $this->attributes['previous_trend'];
+    }
 }
