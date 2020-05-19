@@ -103,5 +103,24 @@ class WeekTest extends TestCase
         $this->assertNull($week->price_start);
     }
 
+    public function testPreviousTrendMutatorIDKTrend()
+    {
+        $trend = 4;
+        Week::storePrice($this->user->phone_number, $trend);
+
+        $week = Week::first();
+        $this->assertNull($week->previous_trend);
+    }
+
+    public function testPreviousTrendMutatorTheyKnowTrend()
+    {
+        $trend = 1;
+        Week::storePrice($this->user->phone_number, $trend);
+
+        $week = Week::first();
+        $this->assertNotNull($week->previous_trend);
+        $this->assertEquals($trend, $week->previous_trend);
+    }
+
 
 }
