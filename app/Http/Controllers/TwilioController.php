@@ -35,7 +35,7 @@ class TwilioController extends Controller
 
         if(Str::contains(strtolower($body), self::PAUSE_WORD)){
             // TODO: Need tests
-            $user->update(['paused' => $user->now()->endOfWeek(Carbon::SATURDAY)]);
+            $user->update(['paused' => $user->now()->endOfWeek(Carbon::SATURDAY)->addHours(25)]);
             $response->message('No problem! I will leave you alone until next week!');
             return $response;
         }

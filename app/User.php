@@ -54,9 +54,7 @@ class User extends Model
 
     public function hasPaused($now): bool
     {
-        // Needs to be <= because it's a date field, so we'll snooze until saturday
-        // So if it's a saturday we should also not message.
-        return $now <= $this->paused;
+        return $now < $this->paused;
     }
 
     public function now(): Carbon
